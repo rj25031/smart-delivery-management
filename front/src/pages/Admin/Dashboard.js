@@ -2,6 +2,7 @@ import React from "react";
 import Layout from "../../components/Layout";
 
 const Dashboard = () => {
+  
   return (
     <Layout>
       <div className="p-6 bg-gray-100 min-h-screen">

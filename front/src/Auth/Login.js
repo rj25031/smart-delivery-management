@@ -1,21 +1,46 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
+import Cookies from 'js-cookie';
+import axios from 'axios';
+import { checkAuthToken } from '../helper/validToken';
 const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
 
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Login Data:', formData);
-    // Replace with API call for authentication
+    try {
+      const response = await axios.post('/api/admin/login',formData)
+      Cookies.set('token', response.data.token, { expires: 29/(24 * 60 * 60), path: '/', secure: true, sameSite: 'strict' });
+      e.target[0].value="";
+      e.target[1].value="";
+      
+      if(response.data.success && response.data.user.role === 1){
+        console.log(1);
+        
+        navigate('/admin');
+      }
+      if(response.data.success && response.data.user.role === 0){
+        console.log(1);
+        navigate('/partner');
+      }
+    } catch (error) {
+      console.log(error);
+      
+    }
+   
   };
+
 
   return (
     <Layout>
