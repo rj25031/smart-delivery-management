@@ -4,23 +4,29 @@ import Layout from '../../components/Layout';
 import { NavLink } from 'react-router-dom';
 
 const Assignments = () => {
-  const [assignments, setAssignments] = useState([]);
-  const [metrics, setMetrics] = useState([]);
+  const [order, setOrder] = useState([]);
+  const [partner, setPartner] = useState([]);
 
   useEffect(() => {
-    axios.get('/api/assignments/metrics')
-      .then(response => {
-        setMetrics(response.data);
+    axios
+      .get("/api/orders/getOrder")
+      .then((response) => {
+        setOrder(response.data);
+        console.log(response);
       })
-      .catch(err => { 
+      .catch((err) => {
         console.log(err);
       });
+  }, []);
 
-    axios.get('/api/assignments/getAssign')
-      .then(response => {
-        setAssignments(response.data);
+  useEffect(() => {
+    axios
+      .get("/api/partners/get")
+      .then((response) => {
+        setPartner(response.data);
+        console.log(partner);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   }, []);
@@ -37,12 +43,12 @@ const Assignments = () => {
 
       <div className="bg-white mt-6 p-6 rounded shadow">
         <h2 className="text-lg font-bold">Assignment Metrics</h2>
-        {metrics && (
+        {order && (
           <div>
-            <p>Total Assignments: {metrics.totalAssigned}</p>
-            <p>Success Rate: {metrics.successRate}%</p>
-            <p>Average Time: {metrics.averageTime} mins</p>
-            <h3>Failure Reasons:</h3>
+            <p>Total Assignments: {order.length}</p>
+            <p>Success Rate: {(order.length/order.status==='delivered')*100}%</p>
+            <p>Average Time: {49} mins</p>
+            <h3>Failure Reasons:{'not mentioned'}</h3>
             <ul>
               {/* {metrics.failureReasons.map((reason, index) => (
                 <li key={index}>
@@ -66,10 +72,10 @@ const Assignments = () => {
             </tr>
           </thead>
           <tbody>
-            {/* {assignments.map((assignment) => (
+            {order.map((assignment) => (
               <tr key={assignment._id}>
-                <td className="px-4 py-2">{assignment.orderId}</td>
-                <td className="px-4 py-2">{assignment.partnerId}</td>
+                <td className="px-4 py-2">{assignment.orderNumber}</td>
+                <td className="px-4 py-2">{assignment.aassignedTo}</td>
                 <td className="px-4 py-2">{assignment.status}</td>
                 <td className="px-4 py-2">
                   <button className="text-blue-500 hover:underline">
@@ -77,7 +83,7 @@ const Assignments = () => {
                   </button>
                 </td>
               </tr>
-            ))} */}
+            ))}
           </tbody>
         </table>
       </div>

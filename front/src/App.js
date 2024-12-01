@@ -13,9 +13,12 @@ import PartnerDashboard from "./pages/Partners/PartnerDashboard";
 import PartnerAssignments from "./pages/Partners/PartnerAssignments"
 import AddOrder from "./Auth/AddOrder";
 import AddAssignment from "./Auth/AddAssignment";
+
 function App() {
+  
   return (
     <div className="App">
+    
       <Router>
         <Routes>
           <Route path="/admin" element={<Dashboard />} />

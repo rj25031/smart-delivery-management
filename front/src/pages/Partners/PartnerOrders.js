@@ -1,7 +1,26 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import Layout from '../../components/Layout';
+import axios from 'axios';
+import { checkAuthToken } from '../../helper/validToken';
 
 const PartnerOrders = () => {
+  const [order, setOrder] = useState([]);
+  const [token, setToken] = useState([]);
+
+  useEffect(() => {
+    const decodedToken = checkAuthToken();
+    setToken(decodedToken);
+    axios
+      .get("/api/orders/getOrder")
+      .then((response) => {
+        setOrder(response.data);
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <Layout>
     <div className="p-6 bg-gray-100 min-h-screen">
@@ -18,16 +37,23 @@ const PartnerOrders = () => {
             </tr>
           </thead>
           <tbody>
-            {/* Replace with dynamic data */}
-            <tr>
-              <td className="px-4 py-2">#12345</td>
-              <td className="px-4 py-2">Alice</td>
-              <td className="px-4 py-2">Area 1</td>
-              <td className="px-4 py-2 text-yellow-600">Picked</td>
+            {order.map((od,k)=>{
+              if(od.aassignedTo === token?.name){
+                return (
+                  <tr key={k}>
+              <td className="px-4 py-2">{od.orderNumber}</td>
+              <td className="px-4 py-2">{od?.customer.name}</td>
+              <td className="px-4 py-2">{od?.area}</td>
+              <td className="px-4 py-2 text-yellow-600">{od.status}</td>
               <td className="px-4 py-2">
                 <button className="text-blue-500 hover:underline">Update</button>
               </td>
             </tr>
+                )
+              }
+              
+            })}
+            
           </tbody>
         </table>
       </div>

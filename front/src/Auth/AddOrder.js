@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Layout from "../components/Layout";
 import axios from 'axios';
+import Toast from '../components/Toast';
 
 const AddOrder = () => {
   const [formData, setFormData] = useState({
@@ -9,7 +10,13 @@ const AddOrder = () => {
     area: "",
     items: [{ name: "", quantity: 1, price: 0 }],
   });
-
+  const [toastVisible, setToastVisible] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [types, setTypes] = useState("");
+  const triggerError = (message) => {
+    setToastMessage(message);
+    setToastVisible(true); 
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
     const nameParts = name.split(".");
@@ -48,10 +55,19 @@ const AddOrder = () => {
 
     try {
       const response = await axios.post("/api/orders/create", formData);
-    console.log(response);
-    
+      
+    setTypes(true);
+    triggerError("order successfully created");
+    setFormData({
+      orderNumber: "",
+      customer: { name: "", phone: "", address: "" },
+      area: "",
+      items: [{ name: "", quantity: 1, price: 0 }],
+    })
     } catch (error) {
-      alert("Error creating order");
+    setTypes(false);
+
+      triggerError("Error creating order");
     }
   };
 
@@ -65,7 +81,9 @@ const AddOrder = () => {
           <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
             Add Order
           </h1>
-
+          <Toast visible={toastVisible} onClose={() => setToastVisible(false)} type = {types ? 'sucorder': 'errorder'}>
+        {toastMessage}
+      </Toast>
           <div className="grid grid-cols-2 gap-6">
             <div className="flex items-center">
               <label className="w-1/3 text-gray-600 font-medium">

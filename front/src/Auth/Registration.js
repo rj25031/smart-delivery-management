@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Layout from '../components/Layout';
 import axios from 'axios';
+import Toast from '../components/Toast';
 const Registration = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -13,7 +14,15 @@ const Registration = () => {
     password: '',
     currentLoad: 0,  
   });
+  const [toastVisible, setToastVisible] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [types, setTypes] = useState(true);
+  
 
+  const triggerError = (message) => {
+    setToastMessage(message);
+    setToastVisible(true); 
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -29,8 +38,23 @@ const Registration = () => {
     try {
       const response = await axios.post('/api/Partners/register',formData)
       console.log('Form Submitted:', response);
+      setTypes(true);
+      triggerError('partner registered successfully ')
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        status: 'active',
+        areas: '',
+        shiftStart: '',
+        shiftEnd: '',
+        password: '',
+        currentLoad: 0,  
+      })
     } catch (error) {  
       console.log(error);
+      setTypes(false);
+      triggerError('Some Error Occurred')
     }
    
   };
@@ -43,7 +67,9 @@ const Registration = () => {
           onSubmit={handleSubmit}
         >
           <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Register Partner</h1>
-          
+          <Toast visible={toastVisible} onClose={() => setToastVisible(false)} type = {types ? 'register': 'errreg'}>
+        {toastMessage}
+      </Toast>
           <div className="grid grid-cols-2 gap-6">
             <div className="flex items-center">
               <label className="w-1/3 text-gray-600 font-medium">Name:</label>

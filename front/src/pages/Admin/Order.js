@@ -18,6 +18,10 @@ const Order = () => {
       });
   }, []);
 
+  function handleEdit(){
+    // const od = axios.put("/:id/orderUpdate", {})
+  }
+
   return (
     <Layout>
     <div className="p-6 bg-gray-100 min-h-screen">
@@ -28,7 +32,7 @@ const Order = () => {
         </NavLink>
       </header>
 
-      <div className="bg-white mt-6 p-4 rounded shadow">
+      {/* <div className="bg-white mt-6 p-4 rounded shadow">
         <h2 className="text-lg font-bold">Filters</h2>
         <div className="flex space-x-4 mt-4">
           <select className="p-2 border rounded">
@@ -47,7 +51,7 @@ const Order = () => {
             className="p-2 border rounded"
           />
         </div>
-      </div>
+      </div> */}
 
       <div className="bg-white mt-6 p-4 rounded shadow">
         <h2 className="text-lg font-bold">Order List</h2>
@@ -55,6 +59,7 @@ const Order = () => {
           <thead>
             <tr>
              
+              <th className="px-4 py-2 text-left text-gray-600">Index</th>
               <th className="px-4 py-2 text-left text-gray-600">Order Number</th>
               <th className="px-4 py-2 text-left text-gray-600">Customer</th>
               <th className="px-4 py-2 text-left text-gray-600">Area</th>
@@ -68,12 +73,13 @@ const Order = () => {
               return(
             <tr key={key}>
               
-              <td className="px-4 py-2">{order.orderNumber}</td>
-              <td className="px-4 py-2">{order.customer.name}</td>
-              <td className="px-4 py-2">{order.area}</td>
+              <td className="px-4 py-2">{key+1}</td>
+              <td className="px-4 py-2">{order?.orderNumber}</td>
+              <td className="px-4 py-2">{order?.customer.name}</td>
+              <td className="px-4 py-2">{order?.area}</td>
               <td className="px-4 py-2 text-yellow-600">{order.status}</td>
               <td className="px-4 py-2">
-                <button className="text-blue-500 hover:underline">View</button>
+                <button className="text-blue-500 hover:underline" onClick={handleEdit}>Edit</button>
               </td>
             </tr>
               )
