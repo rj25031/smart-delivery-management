@@ -1,7 +1,7 @@
 {
   "name": "front",
   "version": "0.1.0",
-  "proxy": "https://sdsm-backend.vercel.app/",
+  "proxy": "https://smart-delivery-management.onrender.com",
   "private": true,
   "dependencies": {
     "@headlessui/react": "^2.2.0",
