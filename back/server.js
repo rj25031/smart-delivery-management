@@ -8,10 +8,10 @@ connectDB();
 const app = express();
 
 app.use(express.json());
-app.use(cors());
-app.use(cors({
-  origin: 'https://sdsm-backend-7rmlz88le-rj25031s-projects.vercel.app/'
-}));
+const corsOptions = {
+    origin: 'http://localhost:3000', 
+    methods: 'GET,POST,PUT,DELETE',
+};
 app.use(morgan('dev'))
 
 //routes
