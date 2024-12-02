@@ -25,7 +25,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/admin/login', formData);
+      const response = await axios.post('https://smart-delivery-management.onrender.com/api/admin/login', formData);
       Cookies.set('token', response.data.token, {
         expires: 10,
         path: '/',
