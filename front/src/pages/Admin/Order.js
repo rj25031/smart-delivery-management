@@ -8,7 +8,7 @@ const Order = () => {
   const [order, setOrder] = useState([]);
 
   useEffect(() => {
-    axios.get('/api/orders/getOrder')
+    axios.get('https://smart-delivery-management.onrender.com/api/orders/getOrder')
       .then(response => {
         setOrder(response.data);
         console.log(response)

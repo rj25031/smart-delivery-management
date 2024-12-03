@@ -5,7 +5,7 @@ const PartnerAssignments = () => {
   const [assignments, setAssignments] = useState([]);
 
   useEffect(() => {
-    axios.get('/api/assignments')
+    axios.get('https://smart-delivery-management.onrender.com/api/assignments')
       .then(response => {
         setAssignments(response.data);
       })

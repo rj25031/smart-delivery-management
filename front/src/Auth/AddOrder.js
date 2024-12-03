@@ -54,7 +54,7 @@ const AddOrder = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("/api/orders/create", formData);
+      const response = await axios.post("https://smart-delivery-management.onrender.com/api/orders/create", formData);
       
     setTypes(true);
     triggerError("order successfully created");

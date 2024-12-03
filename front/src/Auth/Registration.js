@@ -36,7 +36,7 @@ const Registration = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/Partners/register',formData)
+      const response = await axios.post('https://smart-delivery-management.onrender.com/api/Partners/register',formData)
       console.log('Form Submitted:', response);
       setTypes(true);
       triggerError('partner registered successfully ')

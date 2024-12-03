@@ -15,8 +15,8 @@ const AssignmentForm = () => {
   useEffect(() => {
     const fetchOrdersAndPartners = async () => {
       try {
-        const ordersResponse = await axios.get('/api/orders');
-        const partnersResponse = await axios.get('/api/partners');
+        const ordersResponse = await axios.get('https://smart-delivery-management.onrender.com/api/orders');
+        const partnersResponse = await axios.get('https://smart-delivery-management.onrender.com/api/partners');
         setOrders(ordersResponse.data);
         setPartners(partnersResponse.data);
       } catch (error) {
@@ -35,7 +35,7 @@ const AssignmentForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/assignments', formData);
+      const response = await axios.post('https://smart-delivery-management.onrender.com/api/assignments', formData);
       setMessage(response.data.message);
       setFormData({
         orderId: '',

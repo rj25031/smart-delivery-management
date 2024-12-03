@@ -11,7 +11,7 @@ const PartnerOrders = () => {
     const decodedToken = checkAuthToken();
     setToken(decodedToken);
     axios
-      .get("/api/orders/getOrder")
+      .get("https://smart-delivery-management.onrender.com/api/orders/getOrder")
       .then((response) => {
         setOrder(response.data);
         console.log(response);

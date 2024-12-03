@@ -9,7 +9,7 @@ const Assignments = () => {
 
   useEffect(() => {
     axios
-      .get("/api/orders/getOrder")
+      .get("https://smart-delivery-management.onrender.com/api/orders/getOrder")
       .then((response) => {
         setOrder(response.data);
         console.log(response);
@@ -21,7 +21,7 @@ const Assignments = () => {
 
   useEffect(() => {
     axios
-      .get("/api/partners/get")
+      .get("https://smart-delivery-management.onrender.com/api/partners/get")
       .then((response) => {
         setPartner(response.data);
         console.log(partner);
