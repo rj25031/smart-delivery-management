@@ -77,6 +77,8 @@ npm run server
 
 🔄 Pending tasks include fine-tuning and adding responsive design via media queries.
 
+design improvement 
+
 
 
 ---
