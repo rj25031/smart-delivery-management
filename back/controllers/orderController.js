@@ -51,7 +51,7 @@ export const deleteOrder = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const deletedOrder = await Order.findByIdAndDelete(id);
+    const deletedOrder = await Order.findByIdAndDelete({_id:id});
 
     if (!deletedOrder) {
       return res.status(404).json({ error: "Order not found" });

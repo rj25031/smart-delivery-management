@@ -14,6 +14,6 @@ router.get('/get', getPartners);
 
 router.put('/:id/update', updatePartner);
 
-router.delete('/:id/delete', deletePartner);
+router.delete('/:id', deletePartner);
 
 export default router;

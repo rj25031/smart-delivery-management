@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import Layout from "../../components/Layout";
 import { NavLink } from "react-router-dom";
+import { FaTrashCan } from "react-icons/fa6";
 import axios from "axios";
 const Partner = () => {
   const [partner, setPartner] = useState([]);
-  useEffect(() => {
+
+  function getData(){
     axios
       .get("https://smart-delivery-management.onrender.com/api/partners/get")
       .then((response) => {
@@ -15,14 +17,23 @@ const Partner = () => {
       .catch((err) => {
         console.log(err);
       });
+  }
+  useEffect(() => {
+    getData();
   }, []);
+
+  function handleDelete(e,id){
+    const response = axios.delete(`https://smart-delivery-management.onrender.com/api/partners/${id}`);
+    console.log(response);
+    getData();
+  }
   return (
     <Layout>
       <div className="p-6 bg-gray-100 min-h-screen">
         <header className="flex justify-between items-center bg-white p-4 shadow">
           <h1 className="text-2xl font-bold">Partners</h1>
           <NavLink
-            to="https://smart-delivery-management.onrender.com/admin/partner-register"
+            to="/admin/partner-register"
             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
           >
             Add Partner
@@ -62,8 +73,10 @@ const Partner = () => {
                     </td>
                     <td className="px-4 py-2 ">{partner.currentLoad}</td>
                     <td className="px-4 py-2">
-                      <button className="text-blue-500 hover:underline">
-                        Edit
+                      <button className="text-blue-500 hover:underline" onClick={(e)=>{
+                        handleDelete(e,partner._id);
+                      }}>
+                        <FaTrashCan />
                       </button>
                     </td>
                   </tr>

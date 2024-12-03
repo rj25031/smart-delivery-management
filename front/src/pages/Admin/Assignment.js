@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Layout from '../../components/Layout';
 import { NavLink } from 'react-router-dom';
+import { FaTrashCan } from "react-icons/fa6";
 
 const Assignments = () => {
   const [order, setOrder] = useState([]);
   const [partner, setPartner] = useState([]);
 
-  useEffect(() => {
+  function getData() {
     axios
       .get("https://smart-delivery-management.onrender.com/api/orders/getOrder")
       .then((response) => {
@@ -17,9 +18,7 @@ const Assignments = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
 
-  useEffect(() => {
     axios
       .get("https://smart-delivery-management.onrender.com/api/partners/get")
       .then((response) => {
@@ -29,8 +28,18 @@ const Assignments = () => {
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  useEffect(() => {
+    getData();
   }, []);
 
+
+  function handleDelete(e,id){
+    const response = axios.delete(`https://smart-delivery-management.onrender.com/api/assignments/${id}/assignDelete`);
+    console.log(response);
+    getData();
+  }
   return (
     <Layout>
     <div className="p-6 bg-gray-100 min-h-screen">
@@ -78,8 +87,10 @@ const Assignments = () => {
                 <td className="px-4 py-2">{assignment.aassignedTo}</td>
                 <td className="px-4 py-2">{assignment.status}</td>
                 <td className="px-4 py-2">
-                  <button className="text-blue-500 hover:underline">
-                    Update
+                  <button className="text-blue-500 hover:underline" onClick={(e) => {
+                    handleDelete(e,assignment._id);
+                  }}>
+                  <FaTrashCan></FaTrashCan>
                   </button>
                 </td>
               </tr>

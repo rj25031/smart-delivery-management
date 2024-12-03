@@ -3,11 +3,12 @@ import { useEffect, useState } from 'react';
 import Layout from '../../components/Layout';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
+import { FaTrashCan } from "react-icons/fa6";
 
 const Order = () => {
   const [order, setOrder] = useState([]);
 
-  useEffect(() => {
+  function getData() {
     axios.get('https://smart-delivery-management.onrender.com/api/orders/getOrder')
       .then(response => {
         setOrder(response.data);
@@ -16,10 +17,16 @@ const Order = () => {
       .catch(err => {
         console.log(err);
       });
+  }
+  useEffect(() => {
+    getData();
   }, []);
 
-  function handleEdit(){
-    // const od = axios.put("/:id/orderUpdate", {})
+  function handleDelete(e,id){
+    const response = axios.delete(`https://smart-delivery-management.onrender.com/api/orders/${id}/orderDelete`);
+    console.log(response);
+    getData();
+
   }
 
   return (
@@ -79,7 +86,9 @@ const Order = () => {
               <td className="px-4 py-2">{order?.area}</td>
               <td className="px-4 py-2 text-yellow-600">{order.status}</td>
               <td className="px-4 py-2">
-                <button className="text-blue-500 hover:underline" onClick={handleEdit}>Edit</button>
+                <button className="text-blue-500 hover:underline" onClick={(e)=>{
+                  handleDelete(e,order._id);
+                }}><FaTrashCan></FaTrashCan></button>
               </td>
             </tr>
               )

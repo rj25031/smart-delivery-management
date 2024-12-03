@@ -80,7 +80,7 @@ export const deleteAssignment = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const deletedAssignment = await Assignment.findByIdAndDelete(id);
+    const deletedAssignment = await Assignment.findByIdAndDelete({_id:id});
 
     if (!deletedAssignment) {
       return res.status(404).json({ error: "Assignment not found" });

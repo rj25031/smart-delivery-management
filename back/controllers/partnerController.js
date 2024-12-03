@@ -75,16 +75,21 @@ export const updatePartner = async (req, res) => {
 
 export const deletePartner = async (req, res) => {
   const { id } = req.params;
-
+  
   try {
-    const deletedPartner = await Partner.findByIdAndDelete(id);
 
+    const deletedPartner = await Partner.findByIdAndDelete({_id:id});
+    console.log(deletedPartner);
+    // console.log(id);
+    
     if (!deletedPartner) {
       return res.status(404).json({ error: "Partner not found" });
     }
 
     res.status(200).json({ message: 'Partner deleted successfully' });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.log(error);
+    
+    res.status(500).json({ error: error });
   }
 };
