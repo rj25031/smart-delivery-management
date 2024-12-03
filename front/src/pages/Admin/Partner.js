@@ -22,7 +22,7 @@ const Partner = () => {
         <header className="flex justify-between items-center bg-white p-4 shadow">
           <h1 className="text-2xl font-bold">Partners</h1>
           <NavLink
-            to="https://smart-delivery-management.onrender.com/admin/partner-register"
+            to="/admin/partner-register"
             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
           >
             Add Partner
